@@ -8,3 +8,5 @@ A Secure and Efficient State Channels-Based Resource Trading Scheme
 第二部分--智能合约代码（GO）
 
 第三部分--系统访问接口(java-SDK)
+
+第四部分--星火链网接入(开发中)
