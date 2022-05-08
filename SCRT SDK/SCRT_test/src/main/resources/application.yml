@@ -1,0 +1,71 @@
+spring:
+  thymeleaf:
+    prefix: classpath:templates/
+    check-template-location: true
+    mode: LEGACYHTML5
+    cache: false
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+  jackson:
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 200MB
+
+
+block:
+  txfilePath: D:\code\cuangxinxing\assignment\src\main\resources\template\channel.tx
+  orderOrganizations:
+    tlsca: D:\code\cuangxinxing\assignment\src\main\resources\crypto-config\ordererOrganizations\example.com\tlsca\tlsca.example.com-cert.pem
+  peerOrganizations:
+    org1:
+      user:
+         admin:
+             msp:
+                keystore:
+                  keystorepath: D:\code\cuangxinxing\assignment\src\main\resources\crypto-config\peerOrganizations\org1.example.com\users\Admin@org1.example.com\msp\keystore
+                  keyFileName: 22d1138e6d75ec4891fd3c38f84b8e50212ed20f64dfe66a10201f61ff97c55a_sk
+                cacerts:
+                  certFoldePath: D:\code\cuangxinxing\assignment\src\main\resources\crypto-config\peerOrganizations\org1.example.com\users\Admin@org1.example.com\msp\admincerts
+                  certFoldeName: Admin@org1.example.com-cert.pem
+      peers:
+        peer0:
+          msp:
+            tlscacerts: D:\code\cuangxinxing\assignment\src\main\resources\crypto-config\peerOrganizations\org1.example.com\peers\peer0.org1.example.com\msp\tlscacerts\tlsca.org1.example.com-cert.pem
+        peer1:
+          msp:
+            tlscacerts: D:\code\cuangxinxing\assignment\src\main\resources\crypto-config\peerOrganizations\org1.example.com\peers\peer1.org1.example.com\msp\tlscacerts\tlsca.org1.example.com-cert.pem
+        peer2:
+          msp:
+            tlscacerts: D:\code\cuangxinxing\assignment\src\main\resources\crypto-config\peerOrganizations\org1.example.com\peers\peer2.org1.example.com\msp\tlscacerts\tlsca.org1.example.com-cert.pem
+        peer3:
+          msp:
+            tlscacerts: D:\code\cuangxinxing\assignment\src\main\resources\crypto-config\peerOrganizations\org1.example.com\peers\peer3.org1.example.com\msp\tlscacerts\tlsca.org1.example.com-cert.pem
+        peer4:
+          msp:
+            tlscacerts: D:\code\cuangxinxing\assignment\src\main\resources\crypto-config\peerOrganizations\org1.example.com\peers\peer4.org1.example.com\msp\tlscacerts\tlsca.org1.example.com-cert.pem
+        peer5:
+          msp:
+            tlscacerts: D:\code\cuangxinxing\assignment\src\main\resources\crypto-config\peerOrganizations\org1.example.com\peers\peer5.org1.example.com\msp\tlscacerts\tlsca.org1.example.com-cert.pem
+        peer6:
+          msp:
+            tlscacerts: D:\code\cuangxinxing\assignment\src\main\resources\crypto-config\peerOrganizations\org1.example.com\peers\peer6.org1.example.com\msp\tlscacerts\tlsca.org1.example.com-cert.pem
+
+
+
+
+
+mybatis:
+  type-aliases-package: com.handle.handleVue.entity
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+server:
+  port: 8686
+
+

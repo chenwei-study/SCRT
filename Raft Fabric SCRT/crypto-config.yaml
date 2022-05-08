@@ -1,0 +1,28 @@
+OrdererOrgs:
+  - Name: Orderer
+    Domain: SCRT.com
+    CA:
+        Country: US
+        Province: California
+        Locality: San Francisco
+    Specs:
+      - Hostname: orderer0
+      - Hostname: orderer1
+      - Hostname: orderer2
+      - Hostname: orderer3
+      - Hostname: orderer4
+PeerOrgs:
+  - Name: Org1
+    Domain: org1.SCRT.com
+    EnableNodeOUs: true
+    CA:
+        Country: US
+        Province: California
+        Locality: San Francisco
+
+    Template:
+      Count: 6
+    Users:
+      Count: 1
+
+

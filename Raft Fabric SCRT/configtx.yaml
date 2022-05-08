@@ -1,0 +1,137 @@
+
+Organizations:
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/SCRT.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP.admin')"
+    - &Org1
+        Name: Org1MSP
+        ID: Org1MSP
+        MSPDir: crypto-config/peerOrganizations/org1.SCRT.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('Org1MSP.admin', 'Org1MSP.peer', 'Org1MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('Org1MSP.admin', 'Org1MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('Org1MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.org1.SCRT.com
+              Port: 7051
+Capabilities:
+    Global: &ChannelCapabilities
+        V1_1: true
+    Orderer: &OrdererCapabilities
+        V1_1: true
+    Application: &ApplicationCapabilities
+        V1_2: true
+Application: &ApplicationDefaults
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ApplicationCapabilities
+Orderer: &OrdererDefaults
+    OrdererType: etcdraft
+    EtcdRaft:
+      Consenters:
+        - Host: orderer0.SCRT.com
+          Port: 7050
+          ClientTLSCert: crypto-config/ordererOrganizations/SCRT.com/orderers/orderer0.SCRT.com/tls/server.crt
+          ServerTLSCert: crypto-config/ordererOrganizations/SCRT.com/orderers/orderer0.SCRT.com/tls/server.crt
+        - Host: orderer1.SCRT.com
+          Port: 7050
+          ClientTLSCert: crypto-config/ordererOrganizations/SCRT.com/orderers/orderer1.SCRT.com/tls/server.crt
+          ServerTLSCert: crypto-config/ordererOrganizations/SCRT.com/orderers/orderer1.SCRT.com/tls/server.crt
+        - Host: orderer2.SCRT.com
+          Port: 7050
+          ClientTLSCert: crypto-config/ordererOrganizations/SCRT.com/orderers/orderer2.SCRT.com/tls/server.crt
+          ServerTLSCert: crypto-config/ordererOrganizations/SCRT.com/orderers/orderer2.SCRT.com/tls/server.crt
+        - Host: orderer3.SCRT.com
+          Port: 7050
+          ClientTLSCert: crypto-config/ordererOrganizations/SCRT.com/orderers/orderer3.SCRT.com/tls/server.crt
+          ServerTLSCert: crypto-config/ordererOrganizations/SCRT.com/orderers/orderer3.SCRT.com/tls/server.crt
+        - Host: orderer4.SCRT.com
+          Port: 7050
+          ClientTLSCert: crypto-config/ordererOrganizations/SCRT.com/orderers/orderer4.SCRT.com/tls/server.crt
+          ServerTLSCert: crypto-config/ordererOrganizations/SCRT.com/orderers/orderer4.SCRT.com/tls/server.crt
+    Addresses:
+        - orderer0.SCRT.com:7050
+        - orderer1.SCRT.com:7050
+        - orderer2.SCRT.com:7050
+        - orderer3.SCRT.com:7050
+        - orderer4.SCRT.com:7050
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 98 MB
+        PreferredMaxBytes: 512 KB
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+    Capabilities:
+        <<: *OrdererCapabilities
+Channel: &ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ChannelCapabilities
+Profiles:
+    TwoOrgsOrdererGenesis:
+        <<: *ChannelDefaults
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    - *Org1
+    TwoOrgsChannel:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+

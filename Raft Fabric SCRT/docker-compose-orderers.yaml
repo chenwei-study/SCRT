@@ -1,0 +1,57 @@
+version: '2'
+
+services:
+  orderer0.SCRT.com:
+    extends:
+      file: docker-compose-base.yaml
+      service: orderer.SCRT.com
+    container_name: orderer0.SCRT.com
+    volumes:
+      - ./crypto-config/ordererOrganizations/SCRT.com/orderers/orderer0.SCRT.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/ordererOrganizations/SCRT.com/orderers/orderer0.SCRT.com/tls/:/var/hyperledger/orderer/tls
+    ports:
+      - 8050:7050
+
+  orderer1.SCRT.com:
+    extends:
+      file: docker-compose-base.yaml
+      service: orderer.SCRT.com
+    container_name: orderer1.SCRT.com
+    volumes:
+      - ./crypto-config/ordererOrganizations/SCRT.com/orderers/orderer1.SCRT.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/ordererOrganizations/SCRT.com/orderers/orderer1.SCRT.com/tls/:/var/hyperledger/orderer/tls
+    ports:
+      - 9050:7050
+
+  orderer2.SCRT.com:
+    extends:
+      file: docker-compose-base.yaml
+      service: orderer.SCRT.com
+    container_name: orderer2.SCRT.com
+    volumes:
+      - ./crypto-config/ordererOrganizations/SCRT.com/orderers/orderer2.SCRT.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/ordererOrganizations/SCRT.com/orderers/orderer2.SCRT.com/tls/:/var/hyperledger/orderer/tls
+    ports:
+      - 10050:7050
+
+  orderer3.SCRT.com:
+    extends:
+      file: docker-compose-base.yaml
+      service: orderer.SCRT.com
+    container_name: orderer3.SCRT.com
+    volumes:
+      - ./crypto-config/ordererOrganizations/SCRT.com/orderers/orderer3.SCRT.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/ordererOrganizations/SCRT.com/orderers/orderer3.SCRT.com/tls/:/var/hyperledger/orderer/tls
+    ports:
+      - 11050:7050
+
+  orderer4.SCRT.com:
+    extends:
+      file: docker-compose-base.yaml
+      service: orderer.SCRT.com
+    container_name: orderer4.SCRT.com
+    volumes:
+      - ./crypto-config/ordererOrganizations/SCRT.com/orderers/orderer4.SCRT.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/ordererOrganizations/SCRT.com/orderers/orderer4.SCRT.com/tls/:/var/hyperledger/orderer/tls
+    ports:
+      - 12050:7050

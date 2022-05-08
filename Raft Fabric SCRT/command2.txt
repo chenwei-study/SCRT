@@ -1,0 +1,75 @@
+docker stop $(docker ps -aq)
+
+docker rm $(docker ps -aq)
+
+sudo rm -rf channel-artifacts/
+
+sudo rm -rf crypto-config
+
+sudo rm -rf peer/
+
+
+./bin/cryptogen generate --config=./crypto-config.yaml
+
+
+mkdir channel-artifacts
+./bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+
+./bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/mychannel.tx -channelID mychannel
+
+docker-compose -f docker-compose-orderers.yaml up -d
+
+docker-compose -f docker-compose-peers.yaml up -d
+
+docker-compose -f docker-compose-clies.yaml up -d
+
+docker exec -it cli0 bash
+ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/SCRT.com/orderers/orderer0.SCRT.com/msp/tlscacerts/tlsca.SCRT.com-cert.pem
+peer channel create -o orderer0.SCRT.com:7050 -c mychannel -f ./channel-artifacts/mychannel.tx --tls --cafile $ORDERER_CA
+peer channel join -b mychannel.block
+peer chaincode install -n DMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/DMSC2 -v 1.0 -l golang 
+peer chaincode install -n RMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/RMSC2  -v 1.0 -l golang 
+peer chaincode install -n SCMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/SCMSC2  -v 1.0 -l golang 
+
+ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/SCRT.com/orderers/orderer0.SCRT.com/msp/tlscacerts/tlsca.SCRT.com-cert.pem
+peer chaincode instantiate -o orderer0.SCRT.com:7050 --tls --cafile $ORDERER_CA -C mychannel -l golang -n DMSC -v 1.0 -c '{"Args":["init",""]}' -P "OR ('Org1MSP.peer')"
+peer chaincode instantiate -o orderer0.SCRT.com:7050 --tls --cafile $ORDERER_CA -C mychannel -l golang -n RMSC -v 1.0 -c '{"Args":["init",""]}' -P "OR ('Org1MSP.peer')"
+peer chaincode instantiate -o orderer0.SCRT.com:7050 --tls --cafile $ORDERER_CA -C mychannel -l golang -n SCMSC -v 1.0 -c '{"Args":["init",""]}' -P "OR ('Org1MSP.peer')"
+exit
+
+
+
+docker exec -it cli1 bash
+peer channel join -b mychannel.block
+peer chaincode install -n DMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/DMSC2  -v 1.0 -l golang 
+peer chaincode install -n RMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/RMSC2  -v 1.0 -l golang 
+peer chaincode install -n SCMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/SCMSC2  -v 1.0 -l golang 
+exit
+
+docker exec -it cli2 bash
+peer channel join -b mychannel.block
+peer chaincode install -n DMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/DMSC2  -v 1.0 -l golang 
+peer chaincode install -n RMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/RMSC2  -v 1.0 -l golang 
+peer chaincode install -n SCMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/SCMSC2  -v 1.0 -l golang 
+exit
+
+docker exec -it cli3 bash
+peer channel join -b mychannel.block
+peer chaincode install -n DMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/DMSC2  -v 1.0 -l golang 
+peer chaincode install -n RMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/RMSC2  -v 1.0 -l golang 
+peer chaincode install -n SCMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/SCMSC2  -v 1.0 -l golang 
+exit
+
+docker exec -it cli4 bash
+peer channel join -b mychannel.block
+peer chaincode install -n DMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/DMSC2  -v 1.0 -l golang 
+peer chaincode install -n RMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/RMSC2  -v 1.0 -l golang 
+peer chaincode install -n SCMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/SCMSC2  -v 1.0 -l golang 
+exit
+
+docker exec -it cli5 bash
+peer channel join -b mychannel.block
+peer chaincode install -n DMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/DMSC2  -v 1.0 -l golang 
+peer chaincode install -n RMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/RMSC2  -v 1.0 -l golang 
+peer chaincode install -n SCMSC -p  github.com/hyperledger/fabric/SCRT/chaincode/SCMSC2  -v 1.0 -l golang 
+exit
