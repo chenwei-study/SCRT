@@ -1,5 +1,6 @@
 # SCRT
 A Secure and Efficient State Channels-Based Resource Trading Scheme
+
 “星火杯”区块链应用大赛--北京工业大学--基于状态通道的资源交易解决方案
 
 第一部分--区块链环境搭建代码（实验环境，Fabric）
