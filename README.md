@@ -10,9 +10,3 @@ Web3下去中心化算力交易与结算平台
 第三部分--系统访问接口(java-SDK)
 
 第四部分--星火链网接入(开发中)
-
-访问网址：http://8.141.151.51:8080/login
-
-演示地址：https://www.bilibili.com/video/BV1tq4y1t7qp?spm_id_from=333.999.0.0
-
-
